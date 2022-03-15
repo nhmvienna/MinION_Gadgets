@@ -55,10 +55,15 @@ do
 done
 
 ## remove data_${name} folder
-rm -f data_${name}
+rm -rf data_${name}
 
 ## go back to Phylo1
 ssh phylo1
+
+output=/home/clusteradmin/Documents/mkapun/projects/GuppyCluster/test
+name=neopleustes_70041
+input=/media/inter/SeqData/raw/MinION/20220225_neopleustes_dzmb_70041/neopleustes_70041/20220225_1130_MC-111359_0_FAR44677_a20d42b6
+
 
 ## start Basecalling
 for i in {1..4}
@@ -102,7 +107,9 @@ do
 
 done
 
-## retrieve summary and delete FAST5 files
+# wait until all jobs are finished
+
+## retrieve summaries and delete FAST5 files
 for i in {1..4}
 
 do
@@ -125,4 +132,4 @@ done
 
 rm -f $output/s*.ss
 
-scp -r $output/sequencing_summary.txt mkapun@10.10.0.47:/media/inter/Seqdata_${name}/raw/MinION/20220225_neopleustes_dzmb_70041/neopleustes_70041/20220225_1130_MC-111359_0_FAR44677_a20d42b6/sequencing_summary_FAR44677_ac1db6e3_HAC.txt
+scp -r $output/sequencing_summary.txt mkapun@10.10.0.47:${input}/sequencing_summary_FAR44677_ac1db6e3_HAC.txt
