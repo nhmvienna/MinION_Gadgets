@@ -46,7 +46,6 @@ done
 
 ## copy folders to nodes
 for i in {1..4}
-
 do
 
   scp -r data_${name}/${name}_00${i} node0${i}:
@@ -67,7 +66,6 @@ input=/media/inter/SeqData/raw/MinION/20220225_neopleustes_dzmb_70041/neopleuste
 
 ## start Basecalling
 for i in {1..4}
-
 do
 
   mkdir -p $output/HAC_${name}_00${i}
@@ -111,7 +109,6 @@ done
 
 ## retrieve summaries and delete FAST5 files
 for i in {1..4}
-
 do
 
   scp node0${i}:HAC_${name}_00${i}/sequencing_summary.txt $output/s${i}.ss
@@ -119,17 +116,23 @@ do
 
 done
 
-## combine summaries and copy to server
-mv $output/s1.ss $output/sequencing_summary.txt
+## collect FASTQ files, combine summaries and copy to phyloserverserver
+mkdir $output/pass_HAC
+mv $output/s1.ss $output/pass_HAC/sequencing_summary.txt
 
 for i in {2..4}
-
 do
 
-  awk 'NR>1' $output/s${i}.ss >> $output/sequencing_summary.txt
+  awk 'NR>1' $output/s${i}.ss >> $output/pass_HAC/sequencing_summary.txt
+
+done
+
+for i in {1..4}
+do
+
+  scp node0${i}:HAC_neopleustes_70041_00${i}/pass_HAC/* $output/pass_HAC
 
 done
 
 rm -f $output/s*.ss
-
-scp -r $output/sequencing_summary.txt mkapun@10.10.0.47:${input}/sequencing_summary_FAR44677_ac1db6e3_HAC.txt
+scp -r $output/pass_HAC mkapun@10.10.0.47:${input}
