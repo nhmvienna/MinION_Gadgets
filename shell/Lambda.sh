@@ -11,6 +11,7 @@
 
 input=$1
 output=$2
+summary=$3
 
 ## change to home directory of scripts
 BASEDIR=$(dirname $0)
@@ -73,7 +74,7 @@ qsub -W block=true ${output}/shell/qsub_BLAST.sh
 rm -f ${output}/BLAST.fa
 
 python ../scripts/filter_summary.py \
-  --summary ${input}/sequencing_summary.txt \
+  --summary ${summary} \
   --blast ${output}/blastn.txt \
   > ${output}/sequencing_summary_lambda.txt
 
