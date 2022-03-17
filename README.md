@@ -1,4 +1,6 @@
-# README
+# MinION Gadgets - A bioinformatic toolbox
+
+* * *
 
 ## (1) Basecalling
 
