@@ -6,9 +6,6 @@
   # -dbtype nucl
 #
 
-#input=/media/inter/SeqData/raw/MinION/20220225_neopleustes_dzmb_70041/neopleustes_70041/20220225_1130_MC-111359_0_FAR44677_a20d42b6/pass_HAC
-#output=/media/inter/SeqData/raw/MinION/20220225_neopleustes_dzmb_70041/neopleustes_70041/20220225_1130_MC-111359_0_FAR44677_a20d42b6/lambda_HAC
-
 input=$1
 output=$2
 summary=$3
