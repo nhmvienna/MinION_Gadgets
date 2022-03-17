@@ -2,8 +2,8 @@
 
 ### do Nanoplot analysis
 
-output=$1
-input=$2
+input=$1
+output=$2
 name=$3
 
 mkdir $output

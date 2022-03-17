@@ -6,13 +6,11 @@
   # -dbtype nucl
 #
 
-
 #input=/media/inter/SeqData/raw/MinION/20220225_neopleustes_dzmb_70041/neopleustes_70041/20220225_1130_MC-111359_0_FAR44677_a20d42b6/pass_HAC
 #output=/media/inter/SeqData/raw/MinION/20220225_neopleustes_dzmb_70041/neopleustes_70041/20220225_1130_MC-111359_0_FAR44677_a20d42b6/lambda_HAC
 
 input=$1
 output=$2
-
 
 ## change to home directory of scripts
 BASEDIR=$(dirname $0)
@@ -80,6 +78,6 @@ python ../scripts/filter_summary.py \
   > ${output}/sequencing_summary_lambda.txt
 
 sh Nanoplot.sh \
-  ${output}/nanoplot \
   ${output}/sequencing_summary_lambda.txt \
+  ${output}/nanoplot \
   lambda
