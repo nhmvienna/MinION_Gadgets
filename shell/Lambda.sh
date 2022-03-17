@@ -30,19 +30,17 @@ do
 
   temp=${i##*/}
   ID=${temp%%.*}
-  echo $ID
+  #echo $ID
 
   gunzip -c $i \
     | sed -n '1~4s/^@/>/p;2~4p' \
-    >> ${output}/BLAST.fa
+    > ${output}/BLAST_${ID}.fa
 
-done
-
-echo """
+  echo """
   #!/bin/sh
 
   ## name of Job
-  #PBS -N BLAST
+  #PBS -N BLAST_${ID}
 
   ## Redirect output stream to this file.
   #PBS -o ${output}/shell/log.txt
@@ -51,7 +49,7 @@ echo """
   #PBS -j oe
 
   ## Select a maximum of 150 cores and 200gb of RAM
-  #PBS -l select=1:ncpus=150:mem=20gb
+  #PBS -l select=1:ncpus=5:mem=20gb
 
   ######## load dependencies #######
 
@@ -60,16 +58,26 @@ echo """
   ######## run analyses #######
 
   blastn \
-    -num_threads 100 \
+    -num_threads 5 \
     -evalue 1e-100 \
     -outfmt \"6 qseqid sseqid qlen pident length mismatch evalue bitscore\" \
     -db /home/mkapun/github/MinION_Gadgets/data/Lambda.fasta \
-    -query ${output}/BLAST.fa \
+    -query ${output}/BLAST_${ID}.fa \
     >> ${output}/blastn.txt
 
-""" > ${output}/shell/qsub_BLAST.sh
+  rm -f ${output}/BLAST_${ID}.fa
 
-qsub -W block=true ${output}/shell/qsub_BLAST.sh
+  """ > ${output}/shell/qsub_BLAST_${ID}.sh
+
+  qsub ${output}/shell/qsub_BLAST_${ID}.sh
+
+done
+
+while [[ `qstat -u $USER | grep 'BLAST_' | wc -l` -gt 0 ]]
+do
+  echo "still running..."
+  sleep 5
+done
 
 rm -f ${output}/BLAST.fa
 

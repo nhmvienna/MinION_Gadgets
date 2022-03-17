@@ -14,3 +14,14 @@ path/to/outputfolder \
 path/to/sequencing_summary.txt \
 SomeName
 ```
+
+## (2) Lambda reads
+
+This pipeline isolates reads with BLAST hits against the lambda phage reference J02459.1 with an e-value &lt; 1e-100 and produces a NanoPlot summary for this subset (see above).
+
+```bash
+sh shell/Lambda.sh \
+path/to/InputfolderWithAllFastqFiles \
+path/to/outputfolder \
+path/to/sequencing_summary.txt
+```

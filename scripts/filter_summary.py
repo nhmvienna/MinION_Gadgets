@@ -47,6 +47,8 @@ for l in load_data(options.SU):
         print(l.rstrip())
         header = a
         continue
+    if len(header) != len(a):
+        continue
     DICT = {header[x]: a[x] for x in range(len(header))}
     if DICT["read_id"] in IDs:
         print(l.rstrip())
