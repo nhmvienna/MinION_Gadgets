@@ -12,8 +12,8 @@ Run NanoPlot analysis of the BaseCalled reads, or subsets of it. The information
 
 ```bash
 sh shell/Nanoplot.sh \
-path/to/outputfolder \
 path/to/sequencing_summary.txt \
+path/to/outputfolder \
 SomeName
 ```
 
