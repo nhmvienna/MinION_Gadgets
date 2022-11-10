@@ -5,6 +5,7 @@
 input=$1
 output=$2
 name=$3
+barcoded=$4
 
 mkdir $output
 
@@ -21,19 +22,33 @@ echo """
     #PBS -j oe
 
     ## Select a maximum of 200 cores and 200gb of RAM
-    #PBS -l select=1:ncpus=100:mem=200gb
+    #PBS -l select=1:ncpus=50:mem=200gb
 
     ######## load dependencies #######
 
     source /opt/anaconda3/etc/profile.d/conda.sh
     conda activate nanoplot_1.32.1
 
-    ######## run analyses #######
-    NanoPlot \
-      -t 100 \
-      --summary ${input} \
-      --maxlength 250000 \
-      --plots dot -o ${output}/
+    if [[ $barcoded == \"yes\" ]]
+    then
+
+      ######## run analyses #######
+      NanoPlot \
+        -t 50 \
+        --summary ${input} \
+        --maxlength 500000 \
+        --barcoded \
+        --plots dot -o ${output}/
+
+      else
+
+        ######## run analyses #######
+        NanoPlot \
+          -t 50 \
+          --summary ${input} \
+          --maxlength 500000 \
+          --plots dot -o ${output}/
+      fi
 
     ################ make pdf report_test_Damen #############
     pandoc -f html \

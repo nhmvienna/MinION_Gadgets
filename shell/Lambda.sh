@@ -9,6 +9,7 @@
 input=$1
 output=$2
 summary=$3
+name=$4
 
 ## change to home directory of scripts
 BASEDIR=$(dirname $0)
@@ -87,3 +88,18 @@ sh Nanoplot.sh \
   ${output}/sequencing_summary_lambda.txt \
   ${output}/nanoplot \
   lambda
+
+
+folder=${input%/*}
+type=${folder##*/}
+
+for i in $input/*.gz
+
+do
+
+  python ../scripts/RemoveLambda.py \
+    --summary ${output}/sequencing_summary_lambda.txt \
+    --input $i \
+    | gzip >> ${folder}/${name}_${type}.fq.gz
+
+done
