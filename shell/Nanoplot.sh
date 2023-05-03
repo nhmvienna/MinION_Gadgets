@@ -27,7 +27,7 @@ echo """
     ######## load dependencies #######
 
     source /opt/anaconda3/etc/profile.d/conda.sh
-    conda activate nanoplot_1.32.1
+    conda activate nanoplot_1.39.0
 
     if [[ $barcoded == \"yes\" ]]
     then
@@ -73,6 +73,6 @@ echo """
 
     rm -f ${output}/NanoPlot-report*.md
     ######################
-""" > ${output}/qsub_nanoplot.sh
+""" >${output}/qsub_nanoplot.sh
 
 qsub ${output}/qsub_nanoplot.sh
