@@ -29,13 +29,37 @@ echo """
     source /opt/anaconda3/etc/profile.d/conda.sh
     conda activate nanoplot_1.39.0
 
+    if [[ ${input} == *sequencing_summary.txt* ]]; then
+
+      if [[ $barcoded == \"yes\" ]];then
+
+        ######## run analyses #######
+        NanoPlot \
+          -t 50 \
+          --summary ${input} \
+          --maxlength 500000 \
+          --barcoded \
+          --plots dot -o ${output}/
+
+        else
+
+          ######## run analyses #######
+          NanoPlot \
+            -t 50 \
+            --summary ${input} \
+            --maxlength 500000 \
+            --plots dot -o ${output}/
+        fi
+
+    else
+
     if [[ $barcoded == \"yes\" ]]
     then
 
       ######## run analyses #######
       NanoPlot \
         -t 50 \
-        --summary ${input} \
+        --fastq ${input} \
         --maxlength 500000 \
         --barcoded \
         --plots dot -o ${output}/
@@ -45,10 +69,13 @@ echo """
         ######## run analyses #######
         NanoPlot \
           -t 50 \
-          --summary ${input} \
+          --fastq ${input} \
           --maxlength 500000 \
           --plots dot -o ${output}/
       fi
+    fi
+
+
 
     ################ make pdf report_test_Damen #############
     pandoc -f html \
